@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import styled from 'styled-components';
 import Person from './Person/Person';
+import classes from './App.css';
 
 const StyledButton = styled.button`
       background-color: ${props => props.alt ? 'red': 'green'};
@@ -59,6 +60,7 @@ class App extends Component {
 
   render () {
     let persons = null;
+    let btnClass = '';
 
     if ( this.state.showPersons ) {
       persons = (
@@ -73,21 +75,25 @@ class App extends Component {
           })}
         </div>
       );
+
+      btnClass = classes.Red;
     }
 
-    const classes = [];
+    const asssignedClasses = [];
     if (this.state.persons.length <= 2) {
-      classes.push('red');
+      asssignedClasses.push(classes.Red);
     }
     if (this.state.persons.length <= 1) {
-      classes.push('bold');
+      asssignedClasses.push(classes.Bold);
     }
 
     return (
-        <div className="App">
+        <div className={classes.App}>
           <h1>Hi, I'm a React App</h1>
-          <p className={classes.join(' ')}>This is really working!</p>
-          <StyledButton alt={this.state.showPersons} onClick={this.togglePersonsHandler}>Toggle Persons</StyledButton>
+          <p className={asssignedClasses.join(' ')}>This is really working!</p>
+          <button className={btnClass} onClick={this.togglePersonsHandler}>
+           Toggle Persons
+          </button>
           {persons}
         </div>
     );
