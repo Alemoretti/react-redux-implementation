@@ -1,21 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
-import styled from 'styled-components';
 import Person from './Person/Person';
 import classes from './App.css';
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 
-const StyledButton = styled.button`
-      background-color: ${props => props.alt ? 'red': 'green'};
-      font: inherit;
-      border: 1px solid blue;
-      padding: 8px;
-      cursor: pointer;
-
-      &:hover {
-        background-color: ${props => props.alt ? 'salmon': 'lightgreen'} ;
-        color: black;
-      }
-  `;
 class App extends Component {
   state = {
     persons: [
@@ -66,12 +54,13 @@ class App extends Component {
       persons = (
         <div>
           {this.state.persons.map((person, index) => {
-            return <Person
-              click={() => this.deletePersonHandler(index)}
-              name={person.name} 
-              age={person.age}
-              key={person.id}
-              changed={(event) => this.nameChangedHandler(event, person.id)} />
+            return <ErrorBoundary key={person.id}>
+                <Person
+                  click={() => this.deletePersonHandler(index)}
+                  name={person.name} 
+                  age={person.age}
+                  changed={(event) => this.nameChangedHandler(event, person.id)} />
+              </ErrorBoundary>
           })}
         </div>
       );
